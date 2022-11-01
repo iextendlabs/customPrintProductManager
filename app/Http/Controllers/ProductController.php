@@ -55,11 +55,15 @@ class ProductController extends Controller
             
             $data->other_artcut_file = $other_artcut_file;
         }else{
-            $data->other_artcut_file = $req->other_artcut_file;
+            $data->other_artcut_file = 'null';
         }
 
         $data->name = $req->name;
-        $data->drive_link = $req->drive_link;
+        if(isset($req->drive_link)){
+            $data->drive_link = $req->drive_link;
+        }else{
+            $data->drive_link = 'null';
+        }
         $data->daraz = $req->daraz;
         $data->decorguys = $req->decorguys;
         $data->carstickers = $req->carstickers;
@@ -80,15 +84,62 @@ class ProductController extends Controller
     }
 
     public function searchProduct(Request $req){
-        $products = DB::table('products')
-        ->where('name','like', $req->search.'%' )->get();
-        if(count($products) != 0 ){
-            return view('productList',compact('products'));
-        }else{
-            $products = DB::table('products')
-            ->where('sku','like', $req->search.'%' )->get();
-            return view('productList',compact('products'));
+        $query = product::query();
+        $query->where('name','like', $req->search.'%' )
+        ->orWhere('sku','like', $req->search.'%' );
+        $products = $query->get();
+        $search = $req->search;
+        return view('productList',compact('products','search'));
+        
+    }
+
+    public function filterProduct(Request $req){
+        $query = product::query();
+        if(isset($req->name)){
+            $query->where('name','like',$req->name.'%');
         }
+        if(isset($req->drive_link)){
+            $query->where('drive_link',$req->drive_link.'%');
+        }
+        if(isset($req->sku)){
+            $query->where('sku','like',$req->sku.'%');
+        }
+        if(isset($req->artcut_file)){
+            if($req->artcut_file == 1){
+                $query->where('artcut_file','!=','null');
+            }else{
+                $query->where('artcut_file','null');
+            }
+        }
+        if(isset($req->other_artcut_file)){
+            if($req->other_artcut_file == 1){
+                $query->where('other_artcut_file','!=','null');
+            }else{
+                $query->where('other_artcut_file','null');
+            }
+        }
+        if(isset($req->daraz)){
+            $query->where('daraz',$req->daraz);
+        }
+        if(isset($req->decorguys)){
+            $query->where('decorguys',$req->decorguys);
+        }
+        if(isset($req->carstickers)){
+            $query->where('carstickers',$req->carstickers);
+        }
+        $products = $query->get();
+        $old_data = [
+            'name' => $req->name,
+            'drive_link' => $req->drive_link,
+            'sku' => $req->sku,
+            'artcut_file' => $req->artcut_file,
+            'other_artcut_file' => $req->other_artcut_file,
+            'daraz' => $req->daraz,
+            'decorguys' => $req->decorguys,
+            'carstickers' => $req->carstickers,
+        ];
+        return view('productList',compact('products','old_data'));
+        
     }
 
     public function deleteProduct($id){

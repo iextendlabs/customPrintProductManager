@@ -12,6 +12,7 @@
               <div class="col-12 grid-margin">
                 <div class="card">
                 <div class="card-body">
+                  <a href="{{url('/')}}"><div class="badge badge-outline-primary float-end">Home</div></a>
                     <h3 class="card-title">Add Product</h3><br>
                     @if(Session::get('success'))
                     <span style="color: #9ae890 !important;">{{(Session::get('success'))}}</span>
@@ -43,28 +44,25 @@
                           <span style="color: #f44336 !important;">@error('sku'){{ $message }}@enderror</span>
                         </div>
                       </div><br>
-                      <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="input-daraz">Daraz</label>
-                        <div class="col-sm-10">
-                          <div class="form-check form-switch form-switch-lg">
-                            <h3><input type="checkbox" name="daraz" value="1" id="input-daraz" class="form-check-input"/></h3>
-                          </div>
+                      <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-daraz">Daraz</label>
+                        <div class="col-sm-10 radio">
+                          <label class="radio-inline"><input type="radio" name="daraz" value="1" checked> Yes</label>
+                          <label class="radio-inline"><input type="radio" name="daraz" value="0"> No</label>
                         </div>
                       </div><br>
-                      <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="input-decorguys">Decorguys</label>
-                        <div class="col-sm-10">
-                          <div class="form-check form-switch form-switch-lg">
-                            <h3><input type="checkbox" name="decorguys" value="1" id="input-decorguys" class="form-check-input"/></h3>
-                          </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 col-form-label" for="input-decorguys">Decorguys</label>
+                        <div class="col-sm-10 radio">
+                          <label class="radio-inline"><input type="radio" name="decorguys" value="1" checked> Yes</label>
+                          <label class="radio-inline"><input type="radio" name="decorguys" value="0"> No</label>
                         </div>
                       </div><br>
-                      <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label" for="input-carstickers">Carstickers</label>
-                        <div class="col-sm-10">
-                          <div class="form-check form-switch form-switch-lg">
-                            <h3><input type="checkbox" name="carstickers" value="1" id="input-carstickers" class="form-check-input"/></h3>
-                          </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 col-form-label" for="input-carstickers">Carstickers</label>
+                        <div class="col-sm-10 radio">
+                          <label class="radio-inline"><input type="radio" name="carstickers" value="1" checked> Yes</label>
+                          <label class="radio-inline"><input type="radio" name="carstickers" value="0"> No</label>
                         </div>
                       </div><br>
                       <div class="form-group">

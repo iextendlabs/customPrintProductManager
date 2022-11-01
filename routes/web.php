@@ -21,3 +21,4 @@ Route::get('/deleteProduct/{id}',[ProductController::class,'deleteProduct']);
 Route::get('/editProduct/{id}',[ProductController::class,'getProduct']);
 Route::post('/updateProduct',[ProductController::class,'updateProduct']);
 Route::get('/download/{file}',[ProductController::class,'download']);
+Route::post('/filterProduct',[ProductController::class,'filterProduct']);
