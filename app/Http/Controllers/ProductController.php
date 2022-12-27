@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\product;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use File;
 
@@ -72,7 +70,7 @@ class ProductController extends Controller
         $save = $data->save();
 
         if($save == 1){
-            return redirect('/')->with('success','New Product has been successfully added. ');
+            return redirect('/productList')->with('success','New Product has been successfully added. ');
         }else{
             return back()->with('fail','Something went wrong.');
         }
@@ -80,7 +78,7 @@ class ProductController extends Controller
 
     public function products(){
         $products = product::all();
-        return view('productList',compact('products'));
+        return view('product.productList',compact('products'));
     }
 
     public function searchProduct(Request $req){
@@ -89,7 +87,7 @@ class ProductController extends Controller
         ->orWhere('sku','like', $req->search.'%' );
         $products = $query->get();
         $search = $req->search;
-        return view('productList',compact('products','search'));
+        return view('product.productList',compact('products','search'));
         
     }
 
@@ -138,7 +136,7 @@ class ProductController extends Controller
             'decorguys' => $req->decorguys,
             'carstickers' => $req->carstickers,
         ];
-        return view('productList',compact('products','old_data'));
+        return view('product.productList',compact('products','old_data'));
         
     }
 
@@ -158,16 +156,16 @@ class ProductController extends Controller
         }
         $delete = $data->delete();
         if($delete == 1){
-            return redirect('/')->with('success','Product has been successfully Remove. ');
+            return redirect('/productList')->with('success','Product has been successfully Remove. ');
         }else{
-            return redirect('/')->with('fail','Something went wrong.');
+            return redirect('/productList')->with('fail','Something went wrong.');
         }
     }
 
     public function getProduct($id){
         $product = product::find($id);
 
-        return view('productEdit',compact('product'));
+        return view('product.productEdit',compact('product'));
     }
 
     public function updateProduct(Request $req){
@@ -240,7 +238,7 @@ class ProductController extends Controller
         $save = $data->save();
 
         if($save == 1){
-            return redirect('/')->with('success','Product has been successfully update. ');
+            return redirect('/productList')->with('success','Product has been successfully update. ');
         }else{
             return back()->with('fail','Something went wrong.');
         }
